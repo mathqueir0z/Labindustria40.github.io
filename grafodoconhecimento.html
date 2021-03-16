@@ -1,1 +1,38 @@
-<html><img src="https://i.imgur.com/nXYKy9i.png"/></html>
+<head>
+  <style> body { margin: 0; } </style>
+  <script src="three.js"></script>
+  <script src="three-spritetext.min.js"></script>
+  <script src="3d-force-graph.min.js"></script>
+</head>
+
+<body>
+  <div id="3d-graph"></div>
+
+  <script>
+    const Graph = ForceGraph3D()
+      (document.getElementById('3d-graph'))
+        .jsonUrl('mscivgraph5.json')
+        .nodeLabel('id')
+        .nodeAutoColorBy('group')
+        .linkThreeObjectExtend(true)
+        .linkThreeObject(link => {
+          // extend link with text sprite
+          const sprite = new SpriteText(`${link.source} < ${link.label} > ${link.target}`);
+          sprite.color = 'lightgrey';
+          sprite.textHeight = 1.5;
+          return sprite;
+        })
+        .linkPositionUpdate((sprite, { start, end }) => {
+          const middlePos = Object.assign(...['x', 'y', 'z'].map(c => ({
+            [c]: start[c] + (end[c] - start[c]) / 2 // calc middle point
+          })));
+
+          // Position sprite
+          Object.assign(sprite.position, middlePos);
+        });
+
+    // Spread nodes a little wider
+    Graph.d3Force('charge').strength(-120);
+
+  </script>
+</body>
