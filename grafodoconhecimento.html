@@ -4,12 +4,13 @@
   <script src="three-spritetext.min.js"></script>
   <script src="3d-force-graph.min.js"></script>
   <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
+
   <div id="3d-graph"></div>
   <audio class="musica" src="Universo Cognitivo.mp3" controls loop controlslist="nodownload noplaybackrate"></audio>
-
   <script>
     const Graph = ForceGraph3D()
       (document.getElementById('3d-graph'))
@@ -37,4 +38,5 @@
     Graph.d3Force('charge').strength(-120);
 
   </script>
+
 </body>
